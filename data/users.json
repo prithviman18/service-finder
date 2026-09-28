@@ -1,0 +1,92 @@
+[ {
+  "username" : "admin",
+  "password" : "admin123",
+  "name" : "Site Admin",
+  "phone" : "9800000000",
+  "dashboardPage" : "admin.html",
+  "role" : "ADMIN"
+}, {
+  "username" : "worker1",
+  "password" : "worker123",
+  "name" : "Ravi Kumar",
+  "phone" : "9876500002",
+  "aadhar" : "123412341234",
+  "location" : "Alappuzha",
+  "service" : "PLUMBING",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+}, {
+  "username" : "worker2",
+  "password" : "worker123",
+  "name" : "Deepak Menon",
+  "phone" : "9876500003",
+  "aadhar" : "234523452345",
+  "location" : "Kochi",
+  "service" : "ELECTRICAL",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+}, {
+  "username" : "worker3",
+  "password" : "worker123",
+  "name" : "Suresh Nair",
+  "phone" : "9876500004",
+  "aadhar" : "345634563456",
+  "location" : "Alappuzha",
+  "service" : "CARPENTRY",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+}, {
+  "username" : "worker4",
+  "password" : "worker123",
+  "name" : "Priya Raj",
+  "phone" : "9876500005",
+  "aadhar" : "456745674567",
+  "location" : "Trivandrum",
+  "service" : "HOUSEKEEPING",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+}, {
+  "username" : "worker5",
+  "password" : "worker123",
+  "name" : "Manoj Varma",
+  "phone" : "9876500006",
+  "aadhar" : "567856785678",
+  "location" : "Alappuzha",
+  "service" : "PAINTING",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+}, {
+  "username" : "worker6",
+  "password" : "worker123",
+  "name" : "Anand Krishnan",
+  "phone" : "9876500007",
+  "aadhar" : "678967896789",
+  "location" : "Kochi",
+  "service" : "APPLIANCE_REPAIR",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+}, {
+  "username" : "user1",
+  "password" : "user123",
+  "name" : "Anil Joseph",
+  "phone" : "9876500001",
+  "dashboardPage" : "user.html",
+  "role" : "USER"
+}, {
+  "username" : "user2",
+  "password" : "user123",
+  "name" : "Sneha George",
+  "phone" : "9876500008",
+  "dashboardPage" : "user.html",
+  "role" : "USER"
+}, {
+  "username" : "ram",
+  "password" : "12345",
+  "name" : "Ram",
+  "phone" : "9898989898",
+  "aadhar" : "123456789123",
+  "location" : "Kayamkulam",
+  "service" : "CARPENTRY",
+  "dashboardPage" : "worker.html",
+  "role" : "WORKER"
+} ]

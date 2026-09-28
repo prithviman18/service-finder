@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Portal - Local Service Finder</title>
+    <meta name="description" content="Worker management dashboard to update your service skills, location, and verified phone and aadhar credentials.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="brand-container">
+            <div class="brand-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+            <div class="brand-text">
+                <h1>Service Finder</h1>
+                <span>Worker Profile Portal</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <div class="role-banner-chip">
+                <span class="role-badge worker" id="role-badge">WORKER</span>
+                <span id="user-display-name">Worker</span>
+            </div>
+            <button id="btn-logout" class="btn-logout" title="Sign Out">
+                <i class="fa-solid fa-power-off"></i> <span>Logout</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <div class="worker-grid-layout">
+            
+            <!-- Left Side: Live Profile Preview Card -->
+            <div class="card profile-preview-card">
+                <div class="profile-avatar-large">
+                    <i id="preview-service-icon" class="fa-solid fa-wrench"></i>
+                </div>
+                <h3 id="preview-worker-name">Loading...</h3>
+                <p class="role-subtitle">
+                    <span class="badge badge-service" id="preview-worker-service">Service</span>
+                </p>
+
+                <div style="text-align: left; display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+                    <div>
+                        <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Location / City</div>
+                        <div style="font-weight: 600; color: #6ee7b7; display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-location-dot"></i> <span id="preview-worker-location">--</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Direct Contact Phone</div>
+                        <div style="font-weight: 600; color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-phone"></i> <span id="preview-worker-phone">--</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Aadhar Number (Private)</div>
+                        <div style="font-weight: 600; color: #fde68a; font-family: monospace; display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-fingerprint"></i> <span id="preview-worker-aadhar">--</span>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); padding: 0.75rem; margin-top: 0.5rem;">
+                        <div style="color: #34d399; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-circle-check"></i> Profile is Active & Searchable
+                        </div>
+                        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">
+                            Users looking for your service in your city will see your contact card.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Edit Worker Profile Form -->
+            <div class="card">
+                <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                    <h2 style="font-size: 1.35rem; font-weight: 700;">
+                        <i class="fa-solid fa-user-pen" style="color: var(--primary);"></i> Edit Worker Profile
+                    </h2>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
+                        Update your trade skill, location, and verified contact information.
+                    </p>
+                </div>
+
+                <form id="worker-profile-form" onsubmit="handleProfileUpdate(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="worker-name">Full Name <span class="required-star">*</span></label>
+                        <div class="input-container">
+                            <i class="fa-solid fa-id-card input-icon"></i>
+                            <input type="text" id="worker-name" class="form-input" placeholder="Your full name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="worker-service">Primary Trade / Service Category <span class="required-star">*</span></label>
+                        <div class="input-container">
+                            <i class="fa-solid fa-wrench input-icon"></i>
+                            <select id="worker-service" class="form-select" required>
+                                <option value="PLUMBING">Plumbing</option>
+                                <option value="ELECTRICAL">Electrical</option>
+                                <option value="HOUSEKEEPING">House Keeping</option>
+                                <option value="CARPENTRY">Carpentry</option>
+                                <option value="PAINTING">Painting</option>
+                                <option value="APPLIANCE_REPAIR">Appliance Repair</option>
+                                <option value="PEST_CONTROL">Pest Control</option>
+                                <option value="GARDENING">Gardening</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="worker-location">City / Location (Mandatory) <span class="required-star">*</span></label>
+                        <div class="input-container">
+                            <i class="fa-solid fa-location-dot input-icon"></i>
+                            <input type="text" id="worker-location" class="form-input" placeholder="e.g. Alappuzha, Kochi, Trivandrum" required>
+                        </div>
+                        <div class="form-helper">
+                            <span>Plain text location (used for search matching)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="worker-phone">Direct Phone Number <span class="required-star">*</span></label>
+                        <div class="input-container">
+                            <i class="fa-solid fa-phone input-icon"></i>
+                            <input type="tel" id="worker-phone" class="form-input" placeholder="10-digit mobile number" pattern="\d{10}" maxlength="10" required>
+                        </div>
+                        <div class="form-helper">10 numeric digits without country code</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="worker-aadhar">Aadhar Number (12 Digits) <span class="required-star">*</span></label>
+                        <div class="input-container">
+                            <i class="fa-solid fa-fingerprint input-icon"></i>
+                            <input type="text" id="worker-aadhar" class="form-input" placeholder="12-digit Aadhar number" pattern="\d{12}" maxlength="12" required oninput="updateAadharCount()">
+                        </div>
+                        <div class="form-helper">
+                            <span>Confidential - verified by admin, hidden from users</span>
+                            <span id="aadhar-count-hint" style="font-weight: 600;">0/12 digits</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-save-profile" class="btn-primary" style="margin-top: 1.75rem;">
+                        <i class="fa-solid fa-floppy-disk"></i> <span>Save Profile Updates</span>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/worker.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Local Service Finder</title>
+    <meta name="description" content="Administrator portal to inspect service workers, registered users, and system analytics.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="brand-container">
+            <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="brand-text">
+                <h1>Service Finder</h1>
+                <span>Admin Administration Portal</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <div class="role-banner-chip">
+                <span class="role-badge admin" id="role-badge">ADMIN</span>
+                <span id="user-display-name">Site Admin</span>
+            </div>
+            <button id="btn-logout" class="btn-logout" title="Sign Out">
+                <i class="fa-solid fa-power-off"></i> <span>Logout</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <!-- System KPI Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fa-solid fa-helmet-safety"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-workers">0</h3>
+                    <p>Total Service Workers</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon cyan"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-users">0</h3>
+                    <p>Registered Customers</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon emerald"><i class="fa-solid fa-layer-group"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-services">0</h3>
+                    <p>Active Service Types</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon amber"><i class="fa-solid fa-database"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-total-accounts">0</h3>
+                    <p>Total Accounts in JSON</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Directory Tabs & Controls -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="auth-tabs" style="margin-bottom: 0; width: auto;">
+                    <button class="auth-tab active" id="tab-workers-btn" onclick="switchAdminTab('workers')">
+                        <i class="fa-solid fa-helmet-safety"></i> Workers Directory
+                    </button>
+                    <button class="auth-tab" id="tab-users-btn" onclick="switchAdminTab('users')">
+                        <i class="fa-solid fa-users"></i> Customers Directory
+                    </button>
+                </div>
+            </div>
+
+            <!-- WORKERS TABLE SECTION -->
+            <section id="section-workers">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+                    <h3 style="font-size: 1.15rem; font-weight: 700;">
+                        <i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Registered Service Workers (Admin View with Aadhar)
+                    </h3>
+                    <div class="input-container" style="max-width: 300px; width: 100%;">
+                        <i class="fa-solid fa-magnifying-glass input-icon"></i>
+                        <input type="text" id="worker-search-input" class="form-input" placeholder="Search by name, city, aadhar..." oninput="filterWorkers()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Worker Details</th>
+                                <th>Service Category</th>
+                                <th>Location (City)</th>
+                                <th>Phone</th>
+                                <th>Aadhar (Confidential)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="workers-table-body">
+                            <!-- Populated via admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="workers-empty-state" class="empty-state" style="display: none;">
+                    <i class="fa-solid fa-users-slash"></i>
+                    <h4>No workers found</h4>
+                    <p>No service workers currently match your criteria.</p>
+                </div>
+            </section>
+
+            <!-- USERS TABLE SECTION -->
+            <section id="section-users" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+                    <h3 style="font-size: 1.15rem; font-weight: 700;">
+                        <i class="fa-solid fa-users" style="color: var(--cyan);"></i> Registered Customers / Users
+                    </h3>
+                    <div class="input-container" style="max-width: 300px; width: 100%;">
+                        <i class="fa-solid fa-magnifying-glass input-icon"></i>
+                        <input type="text" id="user-search-input" class="form-input" placeholder="Search users by name or phone..." oninput="filterUsers()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Customer Name</th>
+                                <th>Phone Number</th>
+                                <th>Account Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Populated via admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="users-empty-state" class="empty-state" style="display: none;">
+                    <i class="fa-solid fa-user-slash"></i>
+                    <h4>No users found</h4>
+                    <p>No customers currently registered.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

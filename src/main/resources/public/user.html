@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Local Services - Local Service Finder</title>
+    <meta name="description" content="Discover and connect with trusted local service workers by trade category and location.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="brand-container">
+            <div class="brand-icon"><i class="fa-solid fa-magnifying-glass-location"></i></div>
+            <div class="brand-text">
+                <h1>Service Finder</h1>
+                <span>Local Service Marketplace</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <div class="role-banner-chip">
+                <span class="role-badge user" id="role-badge">USER</span>
+                <span id="user-display-name">Customer</span>
+            </div>
+            <button id="btn-logout" class="btn-logout" title="Sign Out">
+                <i class="fa-solid fa-power-off"></i> <span>Logout</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <!-- 3-STEP SEARCH WORKFLOW CONTAINER -->
+        <div class="card" style="margin-bottom: 2rem;">
+            
+            <!-- STEP 1: Select Service Category -->
+            <div style="margin-bottom: 1.75rem;">
+                <div class="step-indicator">
+                    <div class="step-number">1</div>
+                    <h3>Select a Service Category</h3>
+                </div>
+                <div id="service-selector-grid" class="service-selector-grid">
+                    <!-- Populated by user.js with interactive service cards -->
+                </div>
+            </div>
+
+            <!-- STEP 2: Filter by Location -->
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="step-indicator">
+                    <div class="step-number">2</div>
+                    <h3>Specify Your City or Location</h3>
+                </div>
+
+                <form onsubmit="handleSearchSubmit(event)" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <div class="input-container" style="flex: 1; min-width: 250px;">
+                        <i class="fa-solid fa-location-dot input-icon"></i>
+                        <input type="text" id="location-input" class="form-input" placeholder="Type city (e.g. Alappuzha, Kochi, Trivandrum)" oninput="performSearch()">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: auto; padding: 0.75rem 1.75rem;">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span>Search Workers</span>
+                    </button>
+                </form>
+
+                <!-- Quick Popular City Chips -->
+                <div class="city-chips-container">
+                    <span style="font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.3rem;">
+                        <i class="fa-solid fa-map-pin"></i> Popular:
+                    </span>
+                    <button type="button" class="city-chip" onclick="selectCityChip('Alappuzha')">Alappuzha</button>
+                    <button type="button" class="city-chip" onclick="selectCityChip('Kochi')">Kochi</button>
+                    <button type="button" class="city-chip" onclick="selectCityChip('Trivandrum')">Trivandrum</button>
+                    <button type="button" class="city-chip" onclick="selectCityChip('Kozhikode')">Kozhikode</button>
+                    <button type="button" class="city-chip" onclick="selectCityChip('Thrissur')">Thrissur</button>
+                    <button type="button" class="city-chip" onclick="selectCityChip('')">Show All Locations</button>
+                </div>
+            </div>
+
+            <div id="results-count-text" style="font-size: 0.85rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 1rem;">
+                Showing available service providers...
+            </div>
+        </div>
+
+        <!-- STEP 3: Search Results Grid -->
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 700;">
+                    <i class="fa-solid fa-users-viewfinder" style="color: var(--emerald);"></i> Available Service Providers
+                </h3>
+            </div>
+
+            <div id="worker-results-grid" class="worker-results-grid">
+                <!-- Dynamically populated via user.js -->
+            </div>
+
+            <div id="search-empty-state" class="empty-state card" style="display: none; margin-top: 1rem;">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                <h4>No matching workers found</h4>
+                <p>Try selecting a different service category or searching for another city.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast-container"></div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/user.js"></script>
+</body>
+</html>
