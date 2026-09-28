@@ -1,0 +1,93 @@
+================================================================================
+LOCAL SERVICE FINDER - STEP-BY-STEP SETUP & RUN GUIDE
+================================================================================
+
+1. SYSTEM PREREQUISITES & VERSIONS REQUIRED
+--------------------------------------------
+- Java Development Kit (JDK): Version 17 or higher (Java 17 / 21 LTS recommended)
+  * Download: https://adoptium.net/ (Eclipse Temurin JDK 17)
+  * Verify in terminal: `java -version` and `javac -version`
+
+- Apache Maven: Version 3.8+ or 3.9+
+  * Download: https://maven.apache.org/download.cgi (or via `brew install maven`)
+  * Verify in terminal: `mvn -version`
+
+- Modern Web Browser: Chrome, Edge, Safari, or Firefox.
+
+* NOTE ON NODE.JS:
+  Node.js / npm is NOT required!
+  The frontend is built using standard Vanilla HTML5, CSS3, and JavaScript (Fetch API).
+  The Java backend (Javalin) directly serves both the static frontend and REST APIs.
+
+
+2. HOW TO INSTALL PREREQUISITES (IF NOT ALREADY INSTALLED)
+---------------------------------------------------------
+On macOS:
+  brew install openjdk@17 maven
+  sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+
+On Windows:
+  1. Download Temurin JDK 17 installer (.msi) and install (check "Set JAVA_HOME").
+  2. Download Apache Maven binary zip, extract to C:\Program Files\Maven, and add bin to PATH.
+
+On Ubuntu / Debian Linux:
+  sudo apt update
+  sudo apt install openjdk-17-jdk maven -y
+
+
+3. HOW TO BUILD & RUN THE PROJECT
+---------------------------------
+Step 1: Open Terminal / Command Prompt and navigate into the project folder:
+  cd service-finder
+
+Step 2: Clean and compile the project into a runnable single JAR:
+  mvn clean package
+
+Step 3: Run the compiled application JAR:
+  java -jar target/app.jar
+
+Step 4: Open your web browser and visit:
+  http://localhost:8080
+
+
+4. HOW TO RUN WITH DOCKER (ALTERNATIVE METHOD)
+----------------------------------------------
+If you have Docker Desktop installed, you can build and run with zero Java installation:
+
+  # Build the Docker image
+  docker build -t service-finder .
+
+  # Run the Docker container
+  docker run -p 8080:8080 service-finder
+
+  # Open http://localhost:8080 in your browser
+
+
+5. PRE-SEEDED TEST ACCOUNTS (FOR QUICK DEMO & VIVA)
+---------------------------------------------------
+You can click the one-click demo buttons on the login page or use these credentials:
+
+A) ADMIN PORTAL
+   - Username : admin
+   - Password : admin123
+   - Capabilities: View all workers (including confidential Aadhar), view all customers, view analytics.
+
+B) WORKER PORTAL
+   - Username : worker1
+   - Password : worker123
+   - Capabilities: View and update trade skill, mandatory location (e.g. Alappuzha), phone, and 12-digit Aadhar.
+
+C) CUSTOMER / USER PORTAL
+   - Username : user1
+   - Password : user123
+   - Capabilities: 3-step search by service category and city (e.g. Plumbing in Alappuzha), direct phone call action (Aadhar is kept strictly hidden).
+
+
+6. VERIFICATION & TESTING CHECKLIST
+------------------------------------
+[x] 1. Open http://localhost:8080 -> redirected to login.html
+[x] 2. Login as admin -> check statistics cards and worker/user directories
+[x] 3. Logout and login as worker1 -> edit location or trade skill -> click Save -> verify update persisted
+[x] 4. Logout and login as user1 -> select Plumbing and type "Alappuzha" -> check matching worker cards
+[x] 5. Click "Register" tab on login screen -> test registering a new Worker or Customer
+================================================================================
